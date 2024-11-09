@@ -1,7 +1,8 @@
 import argparse
 import time
 import socket
-from scapy.all import IP, TCP, sr1
+from scapy.all import IP, TCP, ICMP, sr1
+
 
 
 def is_valid_ip(ip):
@@ -37,7 +38,8 @@ def scan_port(target, port, delay):
             print(f"Port {port} is filtered ICMP packet received")
 
     else:
-        print("Port is filtered no response")
+        print(f"Port {port} is filtered (no response)")
+
 
 
     # Apply delay if there is one
@@ -62,7 +64,7 @@ def main():
         return
     if start_port > end_port:
         print("Error: Start port must be less than or equal to end port.")
-
+        return
 
     print(f"Starting scan on {target} from port {start_port} to port {end_port} with {delay}ms delay between each scan")
 
