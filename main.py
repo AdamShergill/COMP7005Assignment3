@@ -51,6 +51,19 @@ def main():
     end_port = args.end
     delay = args.delay
 
+    # Validate IP address
+    if not is_valid_ip(target):
+        print(f"Error: '{target}' is not a valid IP address.")
+        return
+
+     # Validate port range
+    if not (1 <= start_port <= 65535) or not (1 <= end_port <= 65535):
+        print("Error: Port numbers must be in the range 1-65535.")
+        return
+    if start_port > end_port:
+        print("Error: Start port must be less than or equal to end port.")
+
+
     print(f"Starting scan on {target} from port {start_port} to port {end_port} with {delay}ms delay between each scan")
 
     #Loop over all the ports from start to end.
