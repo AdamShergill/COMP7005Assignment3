@@ -1,7 +1,16 @@
 import argparse
 import time
+import socket
 from scapy.all import IP, TCP, sr1
-from sympy.core.random import verify_numerically
+
+
+def is_valid_ip(ip):
+    """Check if the provided IP address is valid."""
+    try:
+        socket.inet_aton(ip)
+        return True
+    except socket.error:
+        return False
 
 
 def parse_arguments():
@@ -35,3 +44,19 @@ def scan_port(target, port, delay):
     if delay > 0:
         time.sleep(delay / 1000) # Converts milliseconds to seconds
 
+def main():
+    args = parse_arguments()
+    target = args.target
+    start_port = args.start
+    end_port = args.end
+    delay = args.delay
+
+    print(f"Starting scan on {target} from port {start_port} to port {end_port} with {delay}ms delay between each scan")
+
+    #Loop over all the ports from start to end.
+
+    for port in range(start_port, end_port + 1):
+        scan_port(target, port, delay)
+
+if __name__ == "__main__":
+    main()
